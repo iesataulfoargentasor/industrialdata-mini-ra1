@@ -1,0 +1,2 @@
+maintenance_id,machine_id,start_utc,end_utc,planned,intervention_type
+MT01,M02,2026-01-12T08:04:00Z,2026-01-12T08:06:00Z,true,inspeccion_programada

@@ -1,0 +1,38 @@
+IndustrialData Mini · Validación técnica · 29/10/2026 (Europe/Madrid)
+
+Entorno: MacBook Air M4, Docker Desktop, Linux ARM64.
+Proyecto Compose independiente: industrialdata-mini-ra1.
+Se conservaron los servicios y datos del stack Big Data preexistente.
+
+Construcción: imagen Python 3.12.9, versiones principales fijadas en
+requirements.txt, PostgreSQL 16.8-bookworm, healthchecks y puertos de loopback.
+
+21 casos automáticos superados (tests/test_mini.py): reconciliación,
+repetición, energía/cobertura, límites, desconocidos, relaciones, fuentes
+inmutables, publicación preservada ante fallo y lectura Parquet/Avro.
+Las pruebas aisladas usan catálogo JSON en carpetas temporales.
+
+Recorrido real: seis cuadernos completos ejecutados con nbclient y kernels
+Python contra PostgreSQL, con DATA_ROOT de ensayo separado.
+00: catálogo de dos máquinas y cuatro sensores; M999 huérfana.
+01: 45 entradas = 40 nuevas + 1 duplicado + 4 rechazos.
+02: un episodio M01 en [08:02,08:07), cinco muestras.
+03: M01=1 kWh y 100%; M02=0,35 kWh y 70%; M02 no evaluable.
+04: publicación con catálogo PostgreSQL y Raw intacto.
+05: segunda recepción 0 nuevas + 41 duplicadas + 4 rechazadas;
+    40 observaciones consolidadas y métricas sin cambios.
+Los cuadernos ejecutados quedan en data/ensayo_<id>/, excluido de Git.
+Los cuadernos publicados no contienen salidas.
+
+Persistencia: se publicó el pipeline fuera de los cuadernos y se reiniciaron
+db, dashboard y notebook sin regenerar datos. Después se verificaron dos
+máquinas, cuatro sensores, auditoría y publicación de 40 observaciones.
+
+Interfaz: panel revisado en navegador con un episodio y M02 «No evaluable».
+Guía y guion revisados: enlaces internos, respuestas desplegables y ancho
+móvil de 395 px sin desbordamiento del documento.
+
+Alcance: muestra pequeña y único ordenador. No valida grandes volúmenes,
+Spark distribuido, una planta real ni todo el RA1. El guion suma 90 minutos
+propuestos, cuya duración docente debe contrastarse con el ensayo del
+profesor. Las descargas y construcciones quedan fuera de esos 90 minutos.

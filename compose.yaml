@@ -1,0 +1,73 @@
+name: industrialdata-mini-ra1
+
+x-app: &app
+  image: industrialdata-mini:1.0
+  build:
+    context: .
+    dockerfile: docker/Dockerfile
+  environment: &env
+    DATA_ROOT: /data
+    PYTHONPATH: /app/src
+    PGHOST: db
+    PGPORT: '5432'
+    PGDATABASE: mini
+    PGUSER: mini
+    PGPASSWORD: ${POSTGRES_PASSWORD:-mini_local_aula}
+  volumes:
+    - ./data:/data
+    - ./src:/app/src:ro
+    - ./notebooks:/app/notebooks
+    - ./tests:/app/tests:ro
+    - ./scripts:/app/scripts:ro
+  depends_on:
+    db: {condition: service_healthy}
+  mem_limit: 1g
+
+services:
+  db:
+    image: postgres:16.8-bookworm
+    environment:
+      POSTGRES_DB: mini
+      POSTGRES_USER: mini
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mini_local_aula}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U mini -d mini']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    mem_limit: 512m
+  simulator:
+    <<: *app
+    profiles: [tools]
+    command: [python, -m, industrialdata.generate]
+  pipeline:
+    <<: *app
+    profiles: [tools]
+    command: [python, -m, industrialdata.run]
+  dashboard:
+    <<: *app
+    command: [streamlit, run, dashboard/app.py, --server.address=0.0.0.0, --server.port=8501, --server.headless=true, --browser.gatherUsageStats=false]
+    ports:
+      - '127.0.0.1:${DASHBOARD_PORT:-18501}:8501'
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8501/_stcore/health', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 30
+    mem_limit: 512m
+  notebook:
+    <<: *app
+    command: [jupyter, notebook, --ip=0.0.0.0, --port=8888, --no-browser, --allow-root, --IdentityProvider.token=, --ServerApp.root_dir=/app/notebooks]
+    ports:
+      - '127.0.0.1:${NOTEBOOK_PORT:-18889}:8888'
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8888/api/status', timeout=3)"]
+      interval: 5s
+      timeout: 4s
+      retries: 30
+    mem_limit: 768m
+volumes:
+  pgdata:

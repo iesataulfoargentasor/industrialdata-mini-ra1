@@ -1,0 +1,3 @@
+production_id,machine_id,start_utc,end_utc,product_id,units_ok,units_rejected
+P01,M01,2026-01-12T08:00:00Z,2026-01-12T08:10:00Z,A,10,0
+P02,M02,2026-01-12T08:00:00Z,2026-01-12T08:10:00Z,B,8,0

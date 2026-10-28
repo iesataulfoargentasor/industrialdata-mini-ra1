@@ -1,0 +1,76 @@
+{
+  "machines": [
+    {
+      "machine_id": "M01",
+      "machine_type": "motor",
+      "location": "Linea 1"
+    },
+    {
+      "machine_id": "M02",
+      "machine_type": "bomba",
+      "location": "Linea 2"
+    }
+  ],
+  "sensors": [
+    {
+      "sensor_id": "M01_temperature",
+      "machine_id": "M01",
+      "variable": "temperature",
+      "unit": "°C",
+      "expected_period_s": 60,
+      "operational_min": 0,
+      "operational_max": 80,
+      "physical_min": -40,
+      "physical_max": 200
+    },
+    {
+      "sensor_id": "M01_power",
+      "machine_id": "M01",
+      "variable": "power",
+      "unit": "kW",
+      "expected_period_s": 60,
+      "operational_min": 0,
+      "operational_max": 10,
+      "physical_min": 0,
+      "physical_max": 100
+    },
+    {
+      "sensor_id": "M02_temperature",
+      "machine_id": "M02",
+      "variable": "temperature",
+      "unit": "°C",
+      "expected_period_s": 60,
+      "operational_min": 0,
+      "operational_max": 80,
+      "physical_min": -40,
+      "physical_max": 200
+    },
+    {
+      "sensor_id": "M02_power",
+      "machine_id": "M02",
+      "variable": "power",
+      "unit": "kW",
+      "expected_period_s": 60,
+      "operational_min": 0,
+      "operational_max": 10,
+      "physical_min": 0,
+      "physical_max": 100
+    }
+  ],
+  "version": "mini-1.0",
+  "start": "2026-01-12T08:00:00Z",
+  "end": "2026-01-12T08:10:00Z",
+  "idle_kw": 0.1,
+  "windows": [
+    {
+      "machine_id": "M01",
+      "start_utc": "2026-01-12T08:00:00Z",
+      "end_utc": "2026-01-12T08:10:00Z"
+    },
+    {
+      "machine_id": "M02",
+      "start_utc": "2026-01-12T08:00:00Z",
+      "end_utc": "2026-01-12T08:10:00Z"
+    }
+  ]
+}

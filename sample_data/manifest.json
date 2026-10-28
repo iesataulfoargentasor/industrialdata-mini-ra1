@@ -1,0 +1,26 @@
+{
+  "scenario": "mini-1.0",
+  "deterministic": true,
+  "machines": 2,
+  "minutes": 10,
+  "start": "2026-01-12T08:00:00Z",
+  "end": "2026-01-12T08:10:00Z",
+  "schema_version": "1.0",
+  "files": [
+    {
+      "path": "raw/telemetry_001.jsonl",
+      "sha256": "7dac6a8d3638d814fbd9354fad086492b43785625f9bb4f2747987c15c32268c",
+      "physical_lines": 45
+    },
+    {
+      "path": "raw/production.csv",
+      "sha256": "12508319a1aa5852180775dd83bbd6943cc40b2f4c0f2c3dc7e22f967dbe5627",
+      "physical_lines": 3
+    },
+    {
+      "path": "raw/maintenance.csv",
+      "sha256": "2b91879b4532bc13c4193fbb2eb6944a4e06537db68858cc9f12694b16e49560",
+      "physical_lines": 2
+    }
+  ]
+}
